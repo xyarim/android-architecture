@@ -38,6 +38,11 @@ dependencies {
     implementation coroutinesAndroid
     implementation navigationFragment
     implementation navigationUi
+    implementation retrofit
+    implementation retrofitCoroutinesAdapter
+    implementation loggingInterceptor
+    implementation gson
+    implementation gsonConverter
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
