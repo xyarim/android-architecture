@@ -2,7 +2,6 @@ package com.xyarim.users.di
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.xyarim.users.api.ApiService
-import com.xyarim.users.di.DatasourceProperties.SERVER_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -14,7 +13,7 @@ val remoteDatasourceModule = module {
     // provided web components
     single { createOkHttpClient() }
     // Fill property
-    single { createWebService<ApiService>(get(), getProperty(SERVER_URL)) }
+    single { createWebService<ApiService>(get(), DatasourceProperties.SERVER_URL) }
 }
 
 

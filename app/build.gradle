@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 apply from: "../dependencies.gradle"
 
 android {
@@ -21,6 +23,14 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    dataBinding {
+        enabled = true
+        enabledForTests = true
     }
 }
 
@@ -43,7 +53,10 @@ dependencies {
     implementation loggingInterceptor
     implementation gson
     implementation gsonConverter
+    implementation lifecycleExtensions
 
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-alpha05"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
