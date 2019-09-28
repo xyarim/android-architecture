@@ -48,7 +48,6 @@ dependencies {
     implementation koinAndroid
     implementation koinAndroidScope
     implementation koinAndroidViewModel
-    implementation glide
     implementation coroutinesCore
     implementation coroutinesAndroid
     implementation navigationFragment
@@ -59,7 +58,8 @@ dependencies {
     implementation gson
     implementation gsonConverter
     implementation lifecycleExtensions
-
+    implementation avatarView
+    implementation avatarViewGlide
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-alpha05"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
