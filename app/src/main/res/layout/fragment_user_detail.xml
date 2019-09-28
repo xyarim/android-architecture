@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+                name="viewmodel"
+                type="com.xyarim.users.ui.fragment.user_detail.UserDetailViewModel"/>
+
+    </data>
+
+
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical"
+                  tools:context=".ui.fragment.user_detail.UserDetailFragment">
+
+        <EditText
+                android:id="@+id/text_user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="First Name"
+                android:text="@={viewmodel.firstName}"/>
+
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Last name"
+                android:text="@={viewmodel.lastName}"/>
+
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:text="@={viewmodel.email}"/>
+
+    </LinearLayout>
+</layout>

@@ -18,7 +18,7 @@
             android:layout_height="?android:attr/listPreferredItemHeight"
             android:gravity="center"
             android:foreground="?attr/selectableItemBackground"
-            android:onClick="@{() -> viewmodel.openUser(user.id)}"
+            android:onClick="@{() -> viewmodel.openUser(user)}"
             android:orientation="horizontal">
 
         <ImageView

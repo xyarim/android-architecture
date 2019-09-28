@@ -14,8 +14,11 @@ class UsersViewModel(val apiService: ApiService) : ViewModel() {
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
-    private val _openUserEvent = MutableLiveData<Event<Int>>()
-    val openUserEvent: LiveData<Event<Int>> = _openUserEvent
+    private val _openUserEvent = MutableLiveData<Event<User>>()
+    val openUserDetailEvent: LiveData<Event<User>> = _openUserEvent
+
+    private val _createUserEvent = MutableLiveData<Event<Unit>>()
+    val createUserEvent: LiveData<Event<Unit>> = _createUserEvent
 
 
     // This LiveData depends on another so we can use a transformation.
@@ -24,6 +27,7 @@ class UsersViewModel(val apiService: ApiService) : ViewModel() {
     }
 
     fun getUsers() {
+        _dataLoading.postValue(true)
         viewModelScope.launch {
             try {
                 val response = apiService.getUsers().await()
@@ -33,7 +37,7 @@ class UsersViewModel(val apiService: ApiService) : ViewModel() {
             } catch (e: Exception) {
                 e.printStackTrace()
             } finally {
-
+                _dataLoading.postValue(false)
             }
         }
     }
@@ -41,8 +45,12 @@ class UsersViewModel(val apiService: ApiService) : ViewModel() {
     /**
      * Called by Data Binding.
      */
-    fun openUser(taskId: Int) {
-        _openUserEvent.value = Event(taskId)
+    fun openUser(user: User) {
+        _openUserEvent.value = Event(user)
+    }
+
+    fun createUser() {
+        _createUserEvent.value = Event(Unit)
     }
 
     fun refresh() {

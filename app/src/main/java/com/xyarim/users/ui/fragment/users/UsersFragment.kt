@@ -7,7 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.xyarim.users.api.User
 import com.xyarim.users.databinding.FragmentUsersBinding
+import com.xyarim.users.utils.EventObserver
 import com.xyarim.users.utils.setupRefreshLayout
 import org.koin.android.ext.android.inject
 
@@ -43,8 +46,24 @@ class UsersFragment : Fragment() {
         // Set the lifecycle owner to the lifecycle of the view
         usersFragmentDataBinding.lifecycleOwner = this.viewLifecycleOwner
         setupListAdapter()
+        setupNavigation()
         setupRefreshLayout(usersFragmentDataBinding.refreshLayout, usersFragmentDataBinding.usersList)
         viewModel.getUsers()
+    }
+
+    private fun setupNavigation() {
+        viewModel.openUserDetailEvent.observe(this, EventObserver {
+            openUserDetail(it)
+        })
+
+        viewModel.createUserEvent.observe(this, EventObserver {
+            openUserDetail(null)
+        })
+    }
+
+    private fun openUserDetail(user: User?) {
+        val action = UsersFragmentDirections.actionUsersFragmentToUserDetailFragment(user)
+        findNavController().navigate(action)
     }
 
     private fun setupListAdapter() {

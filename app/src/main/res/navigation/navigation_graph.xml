@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation_graph"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/navigation_graph"
             app:startDestination="@id/usersFragment">
 
-    <fragment android:id="@+id/usersFragment" android:name="com.xyarim.users.ui.fragment.users.UsersFragment"
-              android:label="fragment_users" tools:layout="@layout/fragment_users"/>
+    <fragment
+            android:id="@+id/usersFragment"
+            android:name="com.xyarim.users.ui.fragment.users.UsersFragment"
+            android:label="Users"
+            tools:layout="@layout/fragment_users">
+        <action
+                android:id="@+id/action_usersFragment_to_userDetailFragment"
+                app:destination="@id/userDetailFragment"/>
+    </fragment>
+    <fragment
+            android:id="@+id/userDetailFragment"
+            android:name="com.xyarim.users.ui.fragment.user_detail.UserDetailFragment"
+            android:label="fragment_user_detail"
+            tools:layout="@layout/fragment_user_detail">
+        <argument
+                android:name="user"
+                app:nullable="true"
+                app:argType="com.xyarim.users.api.User"/>
+    </fragment>
 </navigation>
