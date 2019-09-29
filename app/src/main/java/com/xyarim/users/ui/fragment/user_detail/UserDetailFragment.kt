@@ -6,9 +6,11 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import com.xyarim.users.R
 import com.xyarim.users.databinding.FragmentUserDetailBinding
 import com.xyarim.users.utils.EventObserver
+import com.xyarim.users.utils.setupSnackbar
 import org.koin.android.ext.android.inject
 
 /**
@@ -41,6 +43,7 @@ class UserDetailFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupNavigation()
+        setupSnackbar()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,6 +61,10 @@ class UserDetailFragment : Fragment() {
         viewModel.userSavedEvent.observe(this, EventObserver {
             findNavController().navigateUp()
         })
+    }
+    private fun setupSnackbar(){
+        view?.setupSnackbar(this, viewModel.snackbarText, Snackbar.LENGTH_SHORT)
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.xyarim.users.R
 import com.xyarim.users.api.ApiService
 import com.xyarim.users.api.UpdateUserRequest
 import com.xyarim.users.api.User
@@ -14,6 +15,9 @@ import kotlinx.coroutines.launch
 class UserDetailViewModel(val apiService: ApiService) : ViewModel() {
     private val _userSavedEvent = MutableLiveData<Event<User>>()
     val userSavedEvent: LiveData<Event<User>> = _userSavedEvent
+
+    private val _snackbarText = MutableLiveData<Event<Int>>()
+    val snackbarText: LiveData<Event<Int>> = _snackbarText
 
     // Two-way databinding, exposing MutableLiveData
     val firstName = MutableLiveData<String>()
@@ -61,6 +65,16 @@ class UserDetailViewModel(val apiService: ApiService) : ViewModel() {
 
 
     private fun validateUser(): Boolean {
+        if (firstName.value.isNullOrEmpty()) {
+            _snackbarText.value = Event(R.string.empty_name_message)
+            return false
+        } else if (lastName.value.isNullOrEmpty()) {
+            _snackbarText.value = Event(R.string.empty_last_name_message)
+            return false
+        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.value).matches()) {
+            _snackbarText.value = Event(R.string.empty_email_message)
+            return false
+        }
         return true
     }
 
