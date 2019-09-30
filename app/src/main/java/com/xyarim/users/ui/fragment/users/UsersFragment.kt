@@ -6,8 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import com.xyarim.users.R
 import com.xyarim.users.api.User
 import com.xyarim.users.databinding.FragmentUsersBinding
 import com.xyarim.users.utils.EventObserver
@@ -27,42 +30,54 @@ class UsersFragment : Fragment() {
     private lateinit var usersFragmentDataBinding: FragmentUsersBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         usersFragmentDataBinding = FragmentUsersBinding.inflate(inflater, container, false)
-            .apply { viewmodel = viewModel }
+                .apply { viewmodel = viewModel }
+        // Set the lifecycle owner to the lifecycle of the view
+        usersFragmentDataBinding.lifecycleOwner = this.viewLifecycleOwner
         return usersFragmentDataBinding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun onResume() {
+        super.onResume()
+        viewModel.getUsers()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        // Set the lifecycle owner to the lifecycle of the view
-        usersFragmentDataBinding.lifecycleOwner = this.viewLifecycleOwner
+
         setupListAdapter()
         setupNavigation()
         setupRefreshLayout(usersFragmentDataBinding.refreshLayout, usersFragmentDataBinding.usersList)
-        viewModel.getUsers()
     }
+
 
     private fun setupNavigation() {
         viewModel.openUserDetailEvent.observe(this, EventObserver {
-            openUserDetail(it)
+            navigateToUserDetails(it)
         })
 
         viewModel.createUserEvent.observe(this, EventObserver {
-            openUserDetail(null)
+            navigateToAddNewUser()
         })
     }
 
-    private fun openUserDetail(user: User?) {
-        val action = UsersFragmentDirections.actionUsersFragmentToUserDetailFragment(user)
+    private fun navigateToUserDetails(user: User) {
+        val action = UsersFragmentDirections.actionUsersFragmentToUserDetailFragment(
+                user,
+                resources.getString(R.string.title_edit_user)
+        )
+        findNavController().navigate(action)
+    }
+
+    private fun navigateToAddNewUser() {
+        val action = UsersFragmentDirections.actionUsersFragmentToUserDetailFragment(
+                null,
+                resources.getString(R.string.title_create_user)
+        )
         findNavController().navigate(action)
     }
 

@@ -1,11 +1,6 @@
 package com.xyarim.users.ui.fragment.user_detail
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.xyarim.users.R
+import androidx.lifecycle.*
 import com.xyarim.users.api.ApiService
 import com.xyarim.users.api.UpdateUserRequest
 import com.xyarim.users.api.User
@@ -13,23 +8,38 @@ import com.xyarim.users.utils.Event
 import kotlinx.coroutines.launch
 
 class UserDetailViewModel(val apiService: ApiService) : ViewModel() {
+
     private val _userSavedEvent = MutableLiveData<Event<User>>()
     val userSavedEvent: LiveData<Event<User>> = _userSavedEvent
 
-    private val _snackbarText = MutableLiveData<Event<Int>>()
-    val snackbarText: LiveData<Event<Int>> = _snackbarText
+
+    private val _dataLoading = MutableLiveData<Boolean>()
+    val dataLoading: LiveData<Boolean> = _dataLoading
 
     // Two-way databinding, exposing MutableLiveData
     val firstName = MutableLiveData<String>()
     val lastName = MutableLiveData<String>()
     val email = MutableLiveData<String>()
+
+    val validationMediator = MediatorLiveData<Boolean>()
+
     var user: User? = null
+
+    init {
+        val observer = Observer<String> { validationMediator.postValue(validateUser()) }
+        validationMediator.apply {
+            addSource(firstName, observer)
+            addSource(lastName, observer)
+            addSource(email, observer)
+        }
+    }
 
     fun setupUser(user: User) {
         firstName.value = user.firstName
         lastName.value = user.lastName
         email.value = user.email
         this.user = user
+        validationMediator.postValue(true)
     }
 
     fun saveUser() {
@@ -42,6 +52,7 @@ class UserDetailViewModel(val apiService: ApiService) : ViewModel() {
     }
 
     private fun updateUser() {
+        _dataLoading.value = true
         viewModelScope.launch {
             val user = this@UserDetailViewModel.user!!.apply {
                 this.firstName = this@UserDetailViewModel.firstName.value
@@ -49,33 +60,27 @@ class UserDetailViewModel(val apiService: ApiService) : ViewModel() {
                 this.email = this@UserDetailViewModel.email.value
             }
             val response = apiService.updateUser(user.id!!, UpdateUserRequest(user)).await()
-            Log.d("updateUser", response.toString())
+            _dataLoading.value = true
             _userSavedEvent.postValue(Event(user))
         }
     }
 
     private fun createUser() {
+        _dataLoading.value = true
         viewModelScope.launch {
             val user = User(firstName = firstName.value, lastName = lastName.value, email = email.value)
             val response = apiService.createUser(UpdateUserRequest(user)).await()
-            Log.d("createUser", response.toString())
             _userSavedEvent.postValue(Event(user))
         }
     }
 
-
     private fun validateUser(): Boolean {
-        if (firstName.value.isNullOrEmpty()) {
-            _snackbarText.value = Event(R.string.empty_name_message)
-            return false
-        } else if (lastName.value.isNullOrEmpty()) {
-            _snackbarText.value = Event(R.string.empty_last_name_message)
-            return false
-        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.value).matches()) {
-            _snackbarText.value = Event(R.string.empty_email_message)
-            return false
+        return when {
+            firstName.value.isNullOrEmpty() -> false
+            lastName.value.isNullOrEmpty() -> false
+            !isValidEmail(email.value) -> false
+            else -> true
         }
-        return true
     }
 
 }

@@ -4,4 +4,11 @@
     <string name="empty_name_message">First name cannot be empty</string>
     <string name="empty_last_name_message">Last name cannot be empty</string>
     <string name="empty_email_message">Invalid email address</string>
+    <string name="title_create_user">Create user</string>
+    <string name="title_edit_user">Edit user</string>
+    <string name="title_users_list">Users</string>
+    <string name="button_save">SAVE</string>
+    <string name="email_hint">Email</string>
+    <string name="last_name_hint">Last Name</string>
+    <string name="first_name_hint">First Name</string>
 </resources>

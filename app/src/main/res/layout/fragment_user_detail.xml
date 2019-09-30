@@ -1,39 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
+        <import type="android.view.View" />
+
         <variable
-                name="viewmodel"
-                type="com.xyarim.users.ui.fragment.user_detail.UserDetailViewModel"/>
+            name="viewmodel"
+            type="com.xyarim.users.ui.fragment.user_detail.UserDetailViewModel" />
+
+        <import type="com.xyarim.users.ui.fragment.user_detail.ValidationRule" />
+
 
     </data>
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:orientation="vertical"
-                  tools:context=".ui.fragment.user_detail.UserDetailFragment">
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:contentPadding="16dp">
 
-        <EditText
-                android:id="@+id/text_user_name"
+            <LinearLayout xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="First Name"
-                android:text="@={viewmodel.firstName}"/>
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
+                android:orientation="vertical"
+                tools:context=".ui.fragment.user_detail.UserDetailFragment">
 
-        <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Last name"
-                android:text="@={viewmodel.lastName}"/>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/name_text_input"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:error="@{@string/empty_name_message}"
+                    app:rule="@{ValidationRule.EMPTY}">
 
-        <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Email"
-                android:inputType="textEmailAddress"
-                android:text="@={viewmodel.email}"/>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/text_user_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="@{!viewmodel.dataLoading}"
+                        android:hint="@string/first_name_hint"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:text="@={viewmodel.firstName}" />
+                </com.google.android.material.textfield.TextInputLayout>
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/last_name_text_input"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:error="@{@string/empty_last_name_message}"
+                    app:rule="@{ValidationRule.EMPTY}">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="@{!viewmodel.dataLoading}"
+                        android:hint="@string/last_name_hint"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:text="@={viewmodel.lastName}" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/email_text_input"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:error="@{@string/empty_email_message}"
+                    app:rule="@{ValidationRule.EMAIL}">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="@{!viewmodel.dataLoading}"
+                        android:hint="@string/email_hint"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:text="@={viewmodel.email}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/save_button"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="16dp"
+                    android:enabled="@{viewmodel.validationMediator}"
+                    android:onClick="@{()-> viewmodel.saveUser()}"
+                    android:text="@string/button_save" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 </layout>

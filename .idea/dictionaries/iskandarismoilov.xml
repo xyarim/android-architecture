@@ -4,6 +4,7 @@
       <w>coroutines</w>
       <w>gson</w>
       <w>koin</w>
+      <w>snackbar</w>
     </words>
   </dictionary>
 </component>
