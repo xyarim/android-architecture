@@ -6,7 +6,7 @@ import com.xyarim.users.api.User
 import com.xyarim.users.utils.Event
 import kotlinx.coroutines.launch
 
-class UsersViewModel(val apiService: ApiService) : ViewModel() {
+class UsersViewModel(private val apiService: ApiService) : ViewModel() {
 
     private val _items = MutableLiveData<List<User>>().apply { value = emptyList() }
     val items: LiveData<List<User>> = _items
@@ -30,7 +30,7 @@ class UsersViewModel(val apiService: ApiService) : ViewModel() {
         _dataLoading.postValue(true)
         viewModelScope.launch {
             try {
-                val response = apiService.getUsers().await()
+                val response = apiService.getUsersAsync().await()
                 if (response.isSuccessful) {
                     _items.postValue(response.body())
                 }

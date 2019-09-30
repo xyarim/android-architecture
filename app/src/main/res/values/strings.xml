@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Users</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="empty_name_message">First name cannot be empty</string>
     <string name="empty_last_name_message">Last name cannot be empty</string>
     <string name="empty_email_message">Invalid email address</string>
@@ -11,4 +10,5 @@
     <string name="email_hint">Email</string>
     <string name="last_name_hint">Last Name</string>
     <string name="first_name_hint">First Name</string>
+    <string name="no_users_image">no users image</string>
 </resources>

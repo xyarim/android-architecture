@@ -10,4 +10,4 @@ val viewModelsModule = module {
     viewModel { UserDetailViewModel(get()) }
 }
 
-val appModule = listOf(viewModelsModule)
+val appModule = listOf(viewModelsModule, remoteDatasourceModule)

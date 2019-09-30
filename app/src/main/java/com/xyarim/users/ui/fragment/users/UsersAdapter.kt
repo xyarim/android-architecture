@@ -21,7 +21,7 @@ class UsersAdapter(private val viewModel: UsersViewModel) : ListAdapter<User, Us
     }
 }
 
-class UserViewHolder private constructor(val binding: UserItemBinding) :
+class UserViewHolder private constructor(private val binding: UserItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
     fun bind(viewModel: UsersViewModel, user: User) {

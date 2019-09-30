@@ -33,10 +33,6 @@ class UserDetailFragment : Fragment() {
     private val args: UserDetailFragmentArgs by navArgs()
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
@@ -65,7 +61,7 @@ class UserDetailFragment : Fragment() {
         fragmentUserDetailBinding.textUserName.showKeyboard()
     }
 
-    fun setupProgressIndicator() {
+    private fun setupProgressIndicator() {
         viewModel.dataLoading.observe(this, Observer {
             if (it) {
                 fragmentUserDetailBinding.saveButton.showProgress {

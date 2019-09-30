@@ -7,7 +7,7 @@ import com.xyarim.users.api.User
 import com.xyarim.users.utils.Event
 import kotlinx.coroutines.launch
 
-class UserDetailViewModel(val apiService: ApiService) : ViewModel() {
+class UserDetailViewModel(private val apiService: ApiService) : ViewModel() {
 
     private val _userSavedEvent = MutableLiveData<Event<User>>()
     val userSavedEvent: LiveData<Event<User>> = _userSavedEvent
@@ -59,7 +59,7 @@ class UserDetailViewModel(val apiService: ApiService) : ViewModel() {
                 this.lastName = this@UserDetailViewModel.lastName.value
                 this.email = this@UserDetailViewModel.email.value
             }
-            val response = apiService.updateUser(user.id!!, UpdateUserRequest(user)).await()
+            val response = apiService.updateUserAsync(user.id!!, UpdateUserRequest(user)).await()
             _dataLoading.value = true
             _userSavedEvent.postValue(Event(user))
         }
@@ -69,7 +69,7 @@ class UserDetailViewModel(val apiService: ApiService) : ViewModel() {
         _dataLoading.value = true
         viewModelScope.launch {
             val user = User(firstName = firstName.value, lastName = lastName.value, email = email.value)
-            val response = apiService.createUser(UpdateUserRequest(user)).await()
+            val response = apiService.createUserAsync(UpdateUserRequest(user)).await()
             _userSavedEvent.postValue(Event(user))
         }
     }

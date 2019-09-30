@@ -1,55 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="android.view.View"/>
-        <variable
-                name="user"
-                type="com.xyarim.users.api.User"/>
+
+        <import type="android.view.View" />
 
         <variable
-                name="viewmodel"
-                type="com.xyarim.users.ui.fragment.users.UsersViewModel"/>
+            name="user"
+            type="com.xyarim.users.api.User" />
+
+        <variable
+            name="viewmodel"
+            type="com.xyarim.users.ui.fragment.users.UsersViewModel" />
     </data>
 
     <LinearLayout
-            android:id="@+id/item_content"
-            android:layout_width="match_parent"
-            android:layout_height="?android:attr/listPreferredItemHeight"
-            android:gravity="center"
-            android:foreground="?attr/selectableItemBackground"
-            android:onClick="@{() -> viewmodel.openUser(user)}"
-            android:orientation="horizontal">
+        android:id="@+id/item_content"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:foreground="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:onClick="@{() -> viewmodel.openUser(user)}"
+        android:orientation="horizontal">
 
         <agency.tango.android.avatarview.views.AvatarView
-                android:id="@+id/user_avatar"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_marginStart="8dp"
-                app:av_border_width="0dp"
-                app:av_text_size_percentage="40"
-                avatarUrl="@{user.avatarUrl}"
-                name="@{user.firstName}"/>
+            android:id="@+id/user_avatar"
+            name="@{user.firstName}"
+            avatarUrl="@{user.avatarUrl}"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="8dp"
+            app:av_border_width="0dp"
+            app:av_text_size_percentage="40" />
 
         <LinearLayout
-                android:layout_width="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_full_name"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:orientation="vertical">
+                android:text="@{user.firstName +' '+ user.lastName}"
+                android:textStyle="bold" />
 
             <TextView
-                    android:id="@+id/text_full_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:text="@{user.firstName +' '+ user.lastName}"/>
-
-            <TextView
-                    android:id="@+id/text_email"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{user.email}"/>
+                android:id="@+id/text_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{user.email}" />
         </LinearLayout>
     </LinearLayout>
 </layout>
