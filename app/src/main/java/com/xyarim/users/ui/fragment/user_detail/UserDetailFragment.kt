@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -14,9 +16,11 @@ import com.github.razir.progressbutton.DrawableButton.Companion.GRAVITY_CENTER
 import com.github.razir.progressbutton.attachTextChangeAnimator
 import com.github.razir.progressbutton.hideProgress
 import com.github.razir.progressbutton.showProgress
+import com.google.android.material.snackbar.Snackbar
 import com.xyarim.users.R
 import com.xyarim.users.databinding.FragmentUserDetailBinding
 import com.xyarim.users.utils.EventObserver
+import com.xyarim.users.utils.setupSnackbar
 import com.xyarim.users.utils.showKeyboard
 import org.koin.android.ext.android.inject
 
@@ -50,6 +54,7 @@ class UserDetailFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         setupNavigation()
         setupProgressIndicator()
+        setupSnackbar()
         args.user?.let {
             viewModel.setupUser(it)
         }
@@ -59,6 +64,10 @@ class UserDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         fragmentUserDetailBinding.saveButton.attachTextChangeAnimator()
         fragmentUserDetailBinding.textUserName.showKeyboard()
+    }
+
+    private fun setupSnackbar() {
+        view?.setupSnackbar(this, viewModel.snackbarText, Snackbar.LENGTH_SHORT)
     }
 
     private fun setupProgressIndicator() {

@@ -10,5 +10,6 @@
     <string name="email_hint">Email</string>
     <string name="last_name_hint">Last Name</string>
     <string name="first_name_hint">First Name</string>
+    <string name="error_saving_user">Error saving user</string>
     <string name="no_users_image">no users image</string>
 </resources>

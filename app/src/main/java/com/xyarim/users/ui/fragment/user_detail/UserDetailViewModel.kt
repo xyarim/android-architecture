@@ -1,6 +1,7 @@
 package com.xyarim.users.ui.fragment.user_detail
 
 import androidx.lifecycle.*
+import com.xyarim.users.R
 import com.xyarim.users.api.ApiService
 import com.xyarim.users.api.UpdateUserRequest
 import com.xyarim.users.api.User
@@ -12,6 +13,8 @@ class UserDetailViewModel(private val apiService: ApiService) : ViewModel() {
     private val _userSavedEvent = MutableLiveData<Event<User>>()
     val userSavedEvent: LiveData<Event<User>> = _userSavedEvent
 
+    private val _snackbarText = MutableLiveData<Event<Int>>()
+    val snackbarText: LiveData<Event<Int>> = _snackbarText
 
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
@@ -59,18 +62,37 @@ class UserDetailViewModel(private val apiService: ApiService) : ViewModel() {
                 this.lastName = this@UserDetailViewModel.lastName.value
                 this.email = this@UserDetailViewModel.email.value
             }
-            val response = apiService.updateUserAsync(user.id!!, UpdateUserRequest(user)).await()
-            _dataLoading.value = true
-            _userSavedEvent.postValue(Event(user))
+            try {
+                val response =
+                    apiService.updateUserAsync(user.id!!, UpdateUserRequest(user)).await()
+                _userSavedEvent.postValue(Event(user))
+
+            } catch (e: Exception) {
+                _snackbarText.postValue(Event(R.string.error_saving_user))
+            } finally {
+                _dataLoading.postValue(false)
+            }
         }
     }
 
     private fun createUser() {
         _dataLoading.value = true
         viewModelScope.launch {
-            val user = User(firstName = firstName.value, lastName = lastName.value, email = email.value)
-            val response = apiService.createUserAsync(UpdateUserRequest(user)).await()
-            _userSavedEvent.postValue(Event(user))
+            try {
+                val user =
+                    User(
+                        firstName = firstName.value,
+                        lastName = lastName.value,
+                        email = email.value
+                    )
+                val response = apiService.createUserAsync(UpdateUserRequest(user)).await()
+                _userSavedEvent.postValue(Event(user))
+
+            } catch (e: Exception) {
+                _snackbarText.postValue(Event(R.string.error_saving_user))
+            } finally {
+                _dataLoading.postValue(false)
+            }
         }
     }
 
