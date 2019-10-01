@@ -38,6 +38,9 @@ git clone https://github.com/xyarim/android-architecture.git
 ### UI
 
 * [Avatar View](https://github.com/TangoAgency/avatar-view) Avatar ImageView with user's name first letter Drawable placeholder
+### TODO
+
+* Implement Repository pattern
 
 ## Authors
 
