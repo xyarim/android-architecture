@@ -1,6 +1,11 @@
 # Android MVVM architecture
 Example of Android app using Navigation Component, Retrofit, Coroutines, LiveData, Koin, Databinding and the MVVM pattern
 
+<p float="left">
+    <img src="https://github.com/xyarim/android-architecture/blob/master/screenshots/first.png?raw=true" width="360" height="640">
+    <img src="https://github.com/xyarim/android-architecture/blob/master/screenshots/second.png?raw=true" width="360" height="640">
+</p>
+
 ## Getting Started
 Clone the repository:
 ```
