@@ -25,8 +25,7 @@ import com.xyarim.users.utils.showKeyboard
 import org.koin.android.ext.android.inject
 
 /**
- * A simple [Fragment] subclass.
- *
+ * Main UI for the add/edit user screen.
  */
 class UserDetailFragment : Fragment() {
 

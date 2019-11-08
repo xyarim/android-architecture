@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.xyarim.users.api.User
 import com.xyarim.users.databinding.UserItemBinding
 
-
+/**
+ * Adapter for the user list. Has a reference to the [UsersViewModel] to send actions back to it.
+ */
 class UsersAdapter(private val viewModel: UsersViewModel) : ListAdapter<User, UserViewHolder>(UserDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {

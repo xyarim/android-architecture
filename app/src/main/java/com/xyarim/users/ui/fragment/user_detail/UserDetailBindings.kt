@@ -14,7 +14,9 @@ fun isValidEmail(email: String?): Boolean {
     return false
 }
 
-
+/**
+ * [BindingAdapter]s for the [User] detail page.
+ */
 @BindingAdapter(value = ["error", "rule"], requireAll = true)
 fun errorWatcher(
         textInputLayout: com.google.android.material.textfield.TextInputLayout,

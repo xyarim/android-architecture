@@ -16,8 +16,7 @@ import com.xyarim.users.utils.setupRefreshLayout
 import org.koin.android.ext.android.inject
 
 /**
- * A simple [Fragment] subclass.
- *
+ * Display a list of [User]s.
  */
 class UsersFragment : Fragment() {
 
@@ -40,13 +39,12 @@ class UsersFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        // Always reloading data for simplicity.
         viewModel.getUsers()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-
         setupListAdapter()
         setupNavigation()
         setupRefreshLayout(usersFragmentDataBinding.refreshLayout, usersFragmentDataBinding.usersList)
