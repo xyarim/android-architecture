@@ -63,8 +63,8 @@ class UserDetailViewModel(private val apiService: ApiService) : ViewModel() {
                 this.email = this@UserDetailViewModel.email.value
             }
             try {
-                val response =
-                    apiService.updateUserAsync(user.id!!, UpdateUserRequest(user)).await()
+
+                apiService.updateUserAsync(user.id!!, UpdateUserRequest(user))
                 _userSavedEvent.postValue(Event(user))
 
             } catch (e: Exception) {
@@ -85,7 +85,7 @@ class UserDetailViewModel(private val apiService: ApiService) : ViewModel() {
                         lastName = lastName.value,
                         email = email.value
                     )
-                val response = apiService.createUserAsync(UpdateUserRequest(user)).await()
+                apiService.createUserAsync(UpdateUserRequest(user))
                 _userSavedEvent.postValue(Event(user))
 
             } catch (e: Exception) {

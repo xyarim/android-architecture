@@ -1,6 +1,5 @@
 package com.xyarim.users.di
 
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.xyarim.users.api.ApiService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -35,6 +34,6 @@ inline fun <reified T> createWebService(okHttpClient: OkHttpClient, url: String)
         .baseUrl(url)
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(CoroutineCallAdapterFactory()).build()
+        .build()
     return retrofit.create(T::class.java)
 }

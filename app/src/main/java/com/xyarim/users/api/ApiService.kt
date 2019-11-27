@@ -7,14 +7,14 @@ import retrofit2.http.*
 interface ApiService {
 
     @GET("users.json")
-    fun getUsersAsync(): Deferred<Response<ArrayList<User>>>
+    suspend fun getUsersAsync(): Response<ArrayList<User>>
 
     @PATCH("/users/{userId}.json")
-    fun updateUserAsync(@Path("userId") userId: Int, @Body updateUserRequest: UpdateUserRequest)
-            : Deferred<Response<User>>
+    suspend fun updateUserAsync(@Path("userId") userId: Int, @Body updateUserRequest: UpdateUserRequest)
+            : Response<User>
 
     @POST("/users.json")
-    fun createUserAsync(@Body updateUserRequest: UpdateUserRequest)
-            : Deferred<Response<User>>
+    suspend fun createUserAsync(@Body updateUserRequest: UpdateUserRequest)
+            : Response<User>
 
 }

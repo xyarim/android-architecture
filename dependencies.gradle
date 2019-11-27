@@ -1,7 +1,6 @@
 ext {
-    def retrofitVersion = "2.5.0"
+    def retrofitVersion = "2.6.1"
     def gsonVersion = "2.8.5"
-    def retrofitCoroutinesAdapterVersion = "0.9.2"
     def koinVersion = "2.0.1"
     def loggingVersion = "3.14.0"
     def gsonConverterVersion = "2.1.0"
@@ -14,8 +13,7 @@ ext {
     retrofit = "com.squareup.retrofit2:retrofit:$retrofitVersion"
     gson = "com.google.code.gson:gson:$gsonVersion"
     gsonConverter = "com.squareup.retrofit2:converter-gson:$gsonConverterVersion"
-    retrofitCoroutinesAdapter = "com.jakewharton.retrofit:" +
-            "retrofit2-kotlin-coroutines-adapter:$retrofitCoroutinesAdapterVersion"
+
     loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$loggingVersion"
 
     koinAndroid = "org.koin:koin-android:$koinVersion"

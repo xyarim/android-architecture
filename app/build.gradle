@@ -54,7 +54,6 @@ dependencies {
     implementation navigationFragment
     implementation navigationUi
     implementation retrofit
-    implementation retrofitCoroutinesAdapter
     implementation loggingInterceptor
     implementation gson
     implementation gsonConverter

@@ -30,7 +30,7 @@ class UsersViewModel(private val apiService: ApiService) : ViewModel() {
         _dataLoading.postValue(true)
         viewModelScope.launch {
             try {
-                val response = apiService.getUsersAsync().await()
+                val response = apiService.getUsersAsync()
                 if (response.isSuccessful) {
                     _items.postValue(response.body())
                 }
