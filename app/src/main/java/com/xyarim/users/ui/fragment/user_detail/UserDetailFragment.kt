@@ -7,8 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -22,7 +20,7 @@ import com.xyarim.users.databinding.FragmentUserDetailBinding
 import com.xyarim.users.utils.EventObserver
 import com.xyarim.users.utils.setupSnackbar
 import com.xyarim.users.utils.showKeyboard
-import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
  * Main UI for the add/edit user screen.
@@ -31,20 +29,20 @@ class UserDetailFragment : Fragment() {
 
     private lateinit var fragmentUserDetailBinding: FragmentUserDetailBinding
 
-    private val viewModel: UserDetailViewModel by inject()
+    private val userDetailViewModel: UserDetailViewModel by viewModel()
 
     private val args: UserDetailFragmentArgs by navArgs()
 
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
 
         fragmentUserDetailBinding = FragmentUserDetailBinding.inflate(inflater, container, false)
-                .apply {
-                    viewmodel = viewModel
-                }
+            .apply {
+                viewmodel = userDetailViewModel
+            }
         fragmentUserDetailBinding.lifecycleOwner = this.viewLifecycleOwner
         return fragmentUserDetailBinding.root
     }
@@ -55,7 +53,7 @@ class UserDetailFragment : Fragment() {
         setupProgressIndicator()
         setupSnackbar()
         args.user?.let {
-            viewModel.setupUser(it)
+            userDetailViewModel.setupUser(it)
         }
     }
 
@@ -66,11 +64,11 @@ class UserDetailFragment : Fragment() {
     }
 
     private fun setupSnackbar() {
-        view?.setupSnackbar(this, viewModel.snackbarText, Snackbar.LENGTH_SHORT)
+        view?.setupSnackbar(this, userDetailViewModel.snackbarText, Snackbar.LENGTH_SHORT)
     }
 
     private fun setupProgressIndicator() {
-        viewModel.dataLoading.observe(this, Observer {
+        userDetailViewModel.dataLoading.observe(this, Observer {
             if (it) {
                 fragmentUserDetailBinding.saveButton.showProgress {
                     buttonTextRes = R.string.button_save
@@ -83,7 +81,7 @@ class UserDetailFragment : Fragment() {
     }
 
     private fun setupNavigation() {
-        viewModel.userSavedEvent.observe(this, EventObserver {
+        userDetailViewModel.userSavedEvent.observe(this, EventObserver {
             findNavController().navigateUp()
         })
     }

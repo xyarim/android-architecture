@@ -13,14 +13,14 @@ import com.xyarim.users.api.User
 import com.xyarim.users.databinding.FragmentUsersBinding
 import com.xyarim.users.utils.EventObserver
 import com.xyarim.users.utils.setupRefreshLayout
-import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
  * Display a list of [User]s.
  */
 class UsersFragment : Fragment() {
 
-    private val viewModel: UsersViewModel by inject()
+    private val usersViewModel: UsersViewModel by viewModel()
 
     private lateinit var listAdapter: UsersAdapter
 
@@ -31,7 +31,7 @@ class UsersFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         usersFragmentDataBinding = FragmentUsersBinding.inflate(inflater, container, false)
-                .apply { viewmodel = viewModel }
+                .apply { viewmodel = usersViewModel }
         // Set the lifecycle owner to the lifecycle of the view
         usersFragmentDataBinding.lifecycleOwner = this.viewLifecycleOwner
         return usersFragmentDataBinding.root
@@ -40,7 +40,7 @@ class UsersFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         // Always reloading data for simplicity.
-        viewModel.getUsers()
+        usersViewModel.getUsers()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -52,11 +52,11 @@ class UsersFragment : Fragment() {
 
 
     private fun setupNavigation() {
-        viewModel.openUserDetailEvent.observe(this, EventObserver {
+        usersViewModel.openUserDetailEvent.observe(this, EventObserver {
             navigateToUserDetails(it)
         })
 
-        viewModel.createUserEvent.observe(this, EventObserver {
+        usersViewModel.createUserEvent.observe(this, EventObserver {
             navigateToAddNewUser()
         })
     }
