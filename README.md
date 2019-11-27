@@ -31,7 +31,6 @@ git clone https://github.com/xyarim/android-architecture.git
 
 * [OkHttp](https://github.com/square/okhttp) An HTTP+HTTP/2 client for Android and Java applications.
 
-* [Kotlin Coroutine Adapter](https://github.com/JakeWharton/retrofit2-kotlin-coroutines-adapter) A Retrofit 2 adapter for Kotlin coroutine's Deferred type.
 
 
 ### Coroutines
